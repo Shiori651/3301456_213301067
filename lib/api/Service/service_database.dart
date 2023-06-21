@@ -141,4 +141,16 @@ class FirebaseGet {
     }).toList();
     return dataList;
   }
+
+  // Future<List<Books>> getBooks() async {
+  //   final snapshot = await FirebaseFirestore.instance
+  //       .collection("books")
+  //       .where("name", isEqualTo: null)
+  //       .limit(10)
+  //       .get();
+  //   final dataList = snapshot.docs.map((DocumentSnapshot doc) {
+  //     final data = doc.data()! as Map<String, dynamic>;
+  //     return Books.fromJson(data).copyWith();
+  //   }).toList();
+  // }
 }

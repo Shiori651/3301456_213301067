@@ -25,15 +25,12 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
   }
 
   List<Books>? books;
-  int? count;
-  bool? cift;
+
   @override
   Widget build(BuildContext context) {
     ref.listen(categoryProvider, (previous, next) {
       if (next.categoryBooks != null) {
         books = next.categoryBooks;
-        count = books!.length ~/ 2;
-        cift = books!.length.isEven;
       }
       setState(() {});
     });
@@ -43,29 +40,45 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
         appBar: AppBar(
           title: Text(widget.category),
         ),
-        body: ListView.builder(
-          itemCount: cift! ? count! : count! + 1,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: (cift! || (index != count))
-                    ? [
-                        BookImgAndTitle(
-                          book: books![2 * index],
-                        ),
-                        BookImgAndTitle(
-                          book: books![2 * index + 1],
-                        ),
-                      ]
-                    : [BookImgAndTitle(book: books![2 * index])],
-              ),
-            );
-          },
-        ),
+        body: CategoryBookShow(books: books),
       );
     }
     return const SplashScreen();
+  }
+}
+
+class CategoryBookShow extends StatelessWidget {
+  const CategoryBookShow({
+    required this.books,
+    super.key,
+  });
+
+  final List<Books>? books;
+
+  @override
+  Widget build(BuildContext context) {
+    final count = books!.length ~/ 2;
+    final cift = books!.length.isEven;
+    return ListView.builder(
+      itemCount: cift ? count : count + 1,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: (cift || (index != count))
+                ? [
+                    BookImgAndTitle(
+                      book: books![2 * index],
+                    ),
+                    BookImgAndTitle(
+                      book: books![2 * index + 1],
+                    ),
+                  ]
+                : [BookImgAndTitle(book: books![2 * index])],
+          ),
+        );
+      },
+    );
   }
 }

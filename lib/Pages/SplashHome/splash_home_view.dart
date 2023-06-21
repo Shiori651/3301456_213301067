@@ -4,6 +4,7 @@ import 'package:kitap_sarayi_app/Pages/SplashHome/splash_home_provider.dart';
 import 'package:kitap_sarayi_app/Pages/home_page.dart';
 import 'package:kitap_sarayi_app/Pages/library_page.dart';
 import 'package:kitap_sarayi_app/Pages/read_list_page.dart';
+import 'package:kitap_sarayi_app/Pages/search_page.dart';
 import 'package:kitap_sarayi_app/Pages/setting_page.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/library_provider.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/readlist_provider.dart';
@@ -44,11 +45,11 @@ class _StateHomeViewState extends ConsumerState<SplashHomeView>
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.search),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   // ignore: inference_failure_on_instance_creation
-              //   // MaterialPageRoute(builder: (context) => const SearchBooks()),
-              // );
+              Navigator.push(
+                context,
+                // ignore: inference_failure_on_instance_creation
+                MaterialPageRoute(builder: (context) => const SearchPage()),
+              );
             },
           ),
           body: tabbarView(),

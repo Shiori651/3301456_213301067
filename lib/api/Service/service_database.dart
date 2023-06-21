@@ -121,7 +121,6 @@ class FirebaseGet {
       final data = doc.data()! as Map<String, dynamic>;
       return Books.fromJson(data);
     }).toList();
-    print("object");
     return dataList;
   }
 }

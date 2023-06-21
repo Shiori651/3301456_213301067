@@ -11,7 +11,17 @@ enum PlatformEnum {
     if (Platform.isAndroid) {
       return PlatformEnum.android.name;
     }
-
     throw Exception('Platform unused please check!');
+  }
+
+  static bool webcheck() {
+    try {
+      if (Platform.isIOS || Platform.isAndroid) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      return true;
+    }
   }
 }

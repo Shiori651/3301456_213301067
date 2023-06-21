@@ -6,6 +6,7 @@ import 'package:kitap_sarayi_app/Pages/SplashVersin/slpash_version_view.dart';
 import 'package:kitap_sarayi_app/Pages/login_page.dart';
 import 'package:kitap_sarayi_app/Tools/basil_theme.dart';
 import 'package:kitap_sarayi_app/Tools/theme_manager.dart';
+import 'package:kitap_sarayi_app/Tools/version/platform_name.dart';
 import 'package:kitap_sarayi_app/firebase_options.dart';
 
 Future<void> main() async {
@@ -49,6 +50,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     const theme = BasilTheme();
+    final isweb = PlatformEnum.webcheck();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
@@ -57,7 +59,7 @@ class _MyAppState extends State<MyApp> {
       },
       title: 'Kitap Sarayı',
       theme: theme.toThemeData(),
-      home: const SplashVersionView(),
+      home: isweb ? const LoginPage() : const SplashVersionView(),
     );
   }
 }

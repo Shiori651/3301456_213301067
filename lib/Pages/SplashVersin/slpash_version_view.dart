@@ -23,6 +23,7 @@ class _SplashVersionViewState extends ConsumerState<SplashVersionView>
   @override
   void initState() {
     super.initState();
+
     ref.read(splashProvider.notifier).checkupdate(''.version);
   }
 

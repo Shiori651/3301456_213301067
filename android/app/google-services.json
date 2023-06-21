@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "960384948251",
+    "project_id": "kitap-sarayi-service",
+    "storage_bucket": "kitap-sarayi-service.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:960384948251:android:b9cc5d3f7787b7b2b740be",
+        "android_client_info": {
+          "package_name": "com.example.kitap_sarayi_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "960384948251-efoqqn7jn2m6km9ines7371v30d353oa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrLr6tpdAOsyWGclUGyUNRNtOpzBlnpRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "960384948251-efoqqn7jn2m6km9ines7371v30d353oa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -119,6 +119,7 @@ class FirebaseGet {
         .get();
     final dataList = snapshot.docs.map((DocumentSnapshot doc) {
       final data = doc.data()! as Map<String, dynamic>;
+      print("object");
       return Books.fromJson(data);
     }).toList();
     return dataList;

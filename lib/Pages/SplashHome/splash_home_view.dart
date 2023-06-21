@@ -3,9 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kitap_sarayi_app/Pages/SplashHome/splash_home_provider.dart';
 import 'package:kitap_sarayi_app/Pages/home_page.dart';
 import 'package:kitap_sarayi_app/Pages/library_page.dart';
+import 'package:kitap_sarayi_app/Pages/read_list_page.dart';
 import 'package:kitap_sarayi_app/Pages/setting_page.dart';
-import 'package:kitap_sarayi_app/Pages/zold_page/books_show_pages.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/library_provider.dart';
+import 'package:kitap_sarayi_app/Tools/Provider/readlist_provider.dart';
 import 'package:kitap_sarayi_app/Tools/language.dart';
 import 'package:kitap_sarayi_app/Tools/splash/splash_screen.dart';
 
@@ -74,7 +75,7 @@ class _StateHomeViewState extends ConsumerState<SplashHomeView>
           popularbooks: data.popularbooks!,
         ),
         const LibraryPage(),
-        const BooksWidgetGet(appbar: HomePageTitle.readListAppbarTitle),
+        const ReadListPage(),
         SettingPage(user: data.user!)
       ],
     );
@@ -112,6 +113,11 @@ mixin _SplashHomeViewListenMixin on ConsumerState<SplashHomeView> {
         ref.read(libraryProvider).libraryListID = next.library!.library!;
         if (next.libraryBooks != null) {
           ref.read(libraryProvider).libraryBooks = next.libraryBooks;
+        }
+        ref.read(readlistProvider).userid = next.user!.id!;
+        ref.read(readlistProvider).readlistListID = next.library!.readList!;
+        if (next.libraryBooks != null) {
+          ref.read(readlistProvider).readlistBooks = next.readListBooks;
         }
       }
     });

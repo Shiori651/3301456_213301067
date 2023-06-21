@@ -24,7 +24,7 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Kütüphanem")),
       body: books == null
-          ? const SizedBox()
+          ? const Text("Kütüphanen Boş")
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10),

@@ -24,7 +24,7 @@ class LibraryCange extends ChangeNotifier {
   }
 
   Future<void> getLibraryProvider() async {
-    libraryBooks = await FirebaseGet().getLibraryBooks(libraryListID);
+    libraryBooks = await FirebaseGet().getDocIdBooks(libraryListID);
     notifyListeners();
   }
 }

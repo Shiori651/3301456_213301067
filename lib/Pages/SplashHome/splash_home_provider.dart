@@ -17,9 +17,16 @@ class SplashHomeProvider extends StateNotifier<SplashHomeState> {
     final libaryid = await FirebaseGet().getLibraryid(id);
     if (libaryid.library!.isNotEmpty) {
       state = state.copyWith(
-        libraryBooks: await FirebaseGet().getLibraryBooks(libaryid.library!),
+        libraryBooks: await FirebaseGet().getDocIdBooks(libaryid.library!),
       );
     }
+    if (libaryid.readList!.isNotEmpty) {
+      print(libaryid.readList);
+      state = state.copyWith(
+        readListBooks: await FirebaseGet().getDocIdBooks(libaryid.readList!),
+      );
+    }
+    print(state.readListBooks);
     state = state.copyWith(
       isGet: true,
       library: libaryid,
@@ -29,6 +36,7 @@ class SplashHomeProvider extends StateNotifier<SplashHomeState> {
 
 class SplashHomeState extends Equatable {
   const SplashHomeState({
+    this.readListBooks,
     this.library,
     this.libraryBooks,
     this.books,
@@ -42,6 +50,7 @@ class SplashHomeState extends Equatable {
   final Users? user;
   final Library? library;
   final List<Books>? libraryBooks;
+  final List<Books>? readListBooks;
 
   @override
   List<Object?> get props => throw UnimplementedError();
@@ -53,6 +62,7 @@ class SplashHomeState extends Equatable {
     Users? user,
     Library? library,
     List<Books>? libraryBooks,
+    List<Books>? readListBooks,
   }) {
     return SplashHomeState(
       isGet: isGet ?? this.isGet,
@@ -61,6 +71,7 @@ class SplashHomeState extends Equatable {
       user: user ?? this.user,
       library: library ?? this.library,
       libraryBooks: libraryBooks ?? this.libraryBooks,
+      readListBooks: readListBooks ?? this.readListBooks,
     );
   }
 }

@@ -94,7 +94,7 @@ class FirebaseGet {
     return Library.fromJson(snapshot.data()! as Map<String, dynamic>);
   }
 
-  Future<List<Books>> getLibraryBooks(List<String> booksid) async {
+  Future<List<Books>> getDocIdBooks(List<String> booksid) async {
     final snapshot = await FirebaseFirestore.instance
         .collection("books")
         .where(

@@ -14,7 +14,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ana Sayfa"),
+        title: Text(
+          "Ana Sayfa",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            color: context.colorScheme.onBackground,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.exit_to_app),
           onPressed: () {

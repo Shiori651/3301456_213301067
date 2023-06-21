@@ -39,7 +39,6 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
     });
 
     if (books != null) {
-      print(books!.length);
       return Scaffold(
         appBar: AppBar(
           title: Text(widget.category),

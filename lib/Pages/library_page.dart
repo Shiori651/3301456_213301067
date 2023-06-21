@@ -22,9 +22,12 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
   Widget build(BuildContext context) {
     books = ref.watch(libraryProvider).libraryBooks;
     return Scaffold(
-      appBar: AppBar(title: const Text("Kütüphanem")),
+      appBar: AppBar(
+        title: const Text("Kütüphanem"),
+        leading: const SizedBox(),
+      ),
       body: books == null
-          ? const Text("Kütüphanen Boş")
+          ? const Center(child: Text("Kütüphane Boş"))
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10),

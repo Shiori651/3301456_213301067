@@ -37,6 +37,24 @@ class UpdateDatabase {
       'library': FieldValue.arrayRemove([newData]),
     });
   }
+
+  Future<void> addReadList(String newData, String userid) async {
+    final CollectionReference libraryCollection =
+        FirebaseFirestore.instance.collection('library');
+
+    await libraryCollection.doc(userid).update({
+      'readList': FieldValue.arrayUnion([newData]),
+    });
+  }
+
+  Future<void> removeReadList(String newData, String userid) async {
+    final CollectionReference libraryCollection =
+        FirebaseFirestore.instance.collection('library');
+
+    await libraryCollection.doc(userid).update({
+      'readList': FieldValue.arrayRemove([newData]),
+    });
+  }
 }
 
 class FirebaseGet {

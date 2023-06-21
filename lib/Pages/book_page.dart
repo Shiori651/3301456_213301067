@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/library_provider.dart';
+import 'package:kitap_sarayi_app/Tools/Provider/readlist_provider.dart';
 import 'package:kitap_sarayi_app/api/Models/books.dart';
 
 class BookPage extends ConsumerStatefulWidget {
@@ -21,8 +22,10 @@ class _BookPageState extends ConsumerState<BookPage> {
 
   @override
   Widget build(BuildContext context) {
-    final referanceprovider = ref.watch(libraryProvider);
-    final isLibrary = referanceprovider.libraryCheck(book.id!);
+    final libaryReferanceprovider = ref.watch(libraryProvider);
+    final readReferanceprovider = ref.watch(readlistProvider);
+    final isLibrary = libaryReferanceprovider.libraryCheck(book.id!);
+    final isReadList = readReferanceprovider.readListCheck(book.id!);
 
     return Scaffold(
       appBar: AppBar(
@@ -63,18 +66,37 @@ class _BookPageState extends ConsumerState<BookPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.only(top: 10),
               child: ElevatedButton.icon(
                 icon: Icon(isLibrary ? Icons.remove : Icons.add),
                 label:
                     Text(isLibrary ? "Kitaplığımdan Çıkar" : "Kitaplığa Ekle"),
                 onPressed: () {
                   if (isLibrary) {
-                    referanceprovider.libraryRomove(book.id!);
-                    referanceprovider.libraryBooks!.remove(book);
+                    libaryReferanceprovider.libraryRomove(book.id!);
+                    libaryReferanceprovider.libraryBooks!.remove(book);
                   } else {
-                    referanceprovider.libraryAdd(book.id!);
-                    referanceprovider.libraryBooks!.add(book);
+                    libaryReferanceprovider.libraryAdd(book.id!);
+                    libaryReferanceprovider.libraryBooks!.add(book);
+                  }
+                  setState(() {});
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: ElevatedButton.icon(
+                icon: Icon(isReadList ? Icons.remove : Icons.add),
+                label: Text(
+                  isReadList ? "Okuma Listemden Çıkar" : "Okuma Listeme Ekle",
+                ),
+                onPressed: () {
+                  if (isReadList) {
+                    readReferanceprovider.readListRomove(book.id!);
+                    readReferanceprovider.readlistBooks!.remove(book);
+                  } else {
+                    readReferanceprovider.readListAdd(book.id!);
+                    readReferanceprovider.readlistBooks!.add(book);
                   }
                   setState(() {});
                 },

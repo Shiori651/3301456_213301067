@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
 import 'package:kitap_sarayi_app/Pages/SplashCategory/splash_category_view.dart';
-import 'package:kitap_sarayi_app/Pages/bookpage.dart';
+import 'package:kitap_sarayi_app/Pages/book_page.dart';
+import 'package:kitap_sarayi_app/Tools/Provider/library_provider.dart';
+import 'package:kitap_sarayi_app/Tools/Provider/readlist_provider.dart';
 import 'package:kitap_sarayi_app/Tools/img_enum.dart';
 import 'package:kitap_sarayi_app/api/Models/books.dart';
 import 'package:kitap_sarayi_app/api/Service/service_database.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({required this.books, required this.popularbooks, super.key});
   final List<Books> books;
   final List<Books> popularbooks;
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    void reset() {
+      ref.read(readlistProvider).reset();
+      ref.read(libraryProvider).reset();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -25,6 +34,7 @@ class HomePage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.exit_to_app),
           onPressed: () {
+            reset();
             Navigator.pop(context);
           },
         ),

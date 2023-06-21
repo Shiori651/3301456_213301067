@@ -26,12 +26,13 @@ class BasilTheme extends ThemeExtension<BasilTheme> {
       useMaterial3: true,
       extensions: [this],
       colorScheme: colorScheme,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: true,
         titleTextStyle: TextStyle(
           fontSize: 20,
           fontFamily: "Roboto",
           fontWeight: FontWeight.w500,
+          color: colorScheme.onBackground,
         ),
       ),
       textTheme: const TextTheme(

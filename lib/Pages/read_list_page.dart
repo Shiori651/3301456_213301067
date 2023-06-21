@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kartal/kartal.dart';
-import 'package:kitap_sarayi_app/Pages/bookpage.dart';
+import 'package:kitap_sarayi_app/Pages/book_page.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/readlist_provider.dart';
 import 'package:kitap_sarayi_app/api/Models/books.dart';
 
@@ -11,9 +11,12 @@ class ReadListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final books = ref.watch(readlistProvider).readlistBooks;
     return Scaffold(
-      appBar: AppBar(title: const Text("Okuma Listem")),
-      body: books!.isEmpty
-          ? const Center(child: Text("Okuma Listen Boş"))
+      appBar: AppBar(
+        title: const Text("Okuma Listem"),
+        leading: const SizedBox(),
+      ),
+      body: books == null
+          ? const Center(child: Text("Okuma Listesi Boş"))
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(10),
@@ -67,32 +70,33 @@ class ReadListCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  book.name!,
-                  style: context.textTheme.labelLarge!.copyWith(fontSize: 20),
-                ),
-                Text(
-                  book.author!,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
+            child: SizedBox(
+              width: 240,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    book.name!,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.textTheme.labelLarge!.copyWith(fontSize: 20),
                   ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                SizedBox(
-                  height: 100,
-                  width: 240,
-                  child: Text(
+                  Text(
+                    book.author!,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
                     book.explanation!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 4,
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           )
         ],

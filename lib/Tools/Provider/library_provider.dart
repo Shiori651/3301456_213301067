@@ -27,6 +27,14 @@ class LibraryCange extends ChangeNotifier {
     libraryBooks = await FirebaseGet().getDocIdBooks(libraryListID);
     notifyListeners();
   }
+
+  void reset() {
+    userid = "";
+    libraryListID = [];
+    if (libraryBooks != null) {
+      libraryBooks!.clear();
+    }
+  }
 }
 
 final libraryProvider =

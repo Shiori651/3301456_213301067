@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:kitap_sarayi_app/api/Models/books.dart';
+import 'package:kitap_sarayi_app/api/Service/service_database.dart';
 
 class SearchProvider extends ChangeNotifier {
   List<Books>? books;
@@ -15,13 +16,21 @@ class SearchProvider extends ChangeNotifier {
   }
 
   Future<void> searchget({
-    String? name,
-    String? isbn,
-    String? author,
-    String? publisher,
-    String? booktype,
+    required String name,
+    required String isbn,
+    required String author,
+    required String publisher,
+    required String booktype,
   }) async {
-    print(booktype);
+    if (booktype == "Tümü") booktype = "";
+    books = await FirebaseGet().getSearch(
+      name: name,
+      author: author,
+      publisher: publisher,
+      ISBN: isbn,
+      book_type: booktype,
+    );
+    notifyListeners();
   }
 }
 

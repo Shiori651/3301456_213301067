@@ -142,15 +142,70 @@ class FirebaseGet {
     return dataList;
   }
 
-  // Future<List<Books>> getBooks() async {
-  //   final snapshot = await FirebaseFirestore.instance
-  //       .collection("books")
-  //       .where("name", isEqualTo: null)
-  //       .limit(10)
-  //       .get();
-  //   final dataList = snapshot.docs.map((DocumentSnapshot doc) {
-  //     final data = doc.data()! as Map<String, dynamic>;
-  //     return Books.fromJson(data).copyWith();
-  //   }).toList();
-  // }
+  Future<List<Books>> getSearch({
+    required String name,
+    required String author,
+    required String publisher,
+    required String ISBN,
+    required String book_type,
+  }) async {
+    Query query = FirebaseFirestore.instance.collection("books");
+    if (ISBN.isNotEmpty) {
+      query = query.where("ISBN", isEqualTo: ISBN);
+    } else {
+      if (book_type.isNotEmpty) {
+        query = query.where("book_type", isEqualTo: book_type);
+      }
+      if (name.isNotEmpty) {
+        name = formatSearchKeyword(name);
+        print(name);
+        query = query
+            .where('name', isGreaterThanOrEqualTo: name)
+            // ignore: prefer_interpolation_to_compose_strings
+            .where('name', isLessThan: name + 'z');
+      }
+
+      if (author.isNotEmpty) {
+        author = formatSearchKeyword(author);
+        query = query
+            .where('author', isGreaterThanOrEqualTo: author)
+            // ignore: prefer_interpolation_to_compose_strings
+            .where('author', isLessThan: author + 'z');
+      }
+
+      if (publisher.isNotEmpty) {
+        publisher = formatSearchKeyword(publisher);
+        query = query
+            .where('publisher', isGreaterThanOrEqualTo: publisher)
+            // ignore: prefer_interpolation_to_compose_strings
+            .where('publisher', isLessThan: publisher + 'z');
+      }
+    }
+
+    final snapshot = await query.get();
+    final dataList = snapshot.docs.map((DocumentSnapshot doc) {
+      final data = doc.data()! as Map<String, dynamic>;
+      return Books.fromJson(data);
+    }).toList();
+    print(dataList.length);
+    return dataList;
+  }
+
+  String formatSearchKeyword(String keyword) {
+    final words = keyword.trim().split(' ');
+
+    for (var i = 0; i < words.length; i++) {
+      final word = words[i];
+      var formattedWord = "";
+      if (word[0] == "i") {
+        formattedWord = "İ${word.substring(1).toLowerCase()}";
+      } else {
+        formattedWord = word[0].toUpperCase() + word.substring(1).toLowerCase();
+      }
+
+      words[i] = formattedWord;
+    }
+
+    return words.join(' ');
+  }
 }

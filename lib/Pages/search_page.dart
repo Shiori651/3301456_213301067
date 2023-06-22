@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kitap_sarayi_app/Pages/SplashCategory/splash_category_view.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/search_provider.dart';
 import 'package:kitap_sarayi_app/Tools/database_key.dart';
+import 'package:kitap_sarayi_app/api/Models/books.dart';
 
 class SearchPage extends ConsumerStatefulWidget {
   const SearchPage({super.key});
@@ -27,10 +29,32 @@ class _SearchPageState extends ConsumerState<SearchPage> {
 
   List<String> category = [];
   String selectedValue = "";
+  bool searching = false;
+  List<Books>? books;
+  bool isget = false;
+  bool notfirt = false;
   @override
   Widget build(BuildContext context) {
     final providerRef = ref.watch(searchProvider);
-    final isget = providerRef.havebooks();
+
+    ref.listen(
+      searchProvider,
+      (previous, next) {
+        print(next.books!.isEmpty);
+        setState(() {
+          if (next.havebooks()) {
+            books = next.books;
+            isget = true;
+          } else {
+            if (books != null) {
+              books!.clear();
+            }
+          }
+          searching = false;
+        });
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Kitap Ara"),
@@ -57,7 +81,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  textFieldWidget("Yazar:", publisher),
+                  textFieldWidget("Yazar:", author),
                   textFieldWidget("Yayın Evi:", publisher),
                 ],
               ),
@@ -88,18 +112,26 @@ class _SearchPageState extends ConsumerState<SearchPage> {
               ),
               ElevatedButton.icon(
                 onPressed: () {
-                  providerRef.searchget(
-                    name: name.text,
-                    author: author.text,
-                    publisher: publisher.text,
-                    isbn: isbn.text,
-                    booktype: selectedValue,
-                  );
+                  setState(() {
+                    providerRef.searchget(
+                      name: name.text,
+                      author: author.text,
+                      publisher: publisher.text,
+                      isbn: isbn.text,
+                      booktype: selectedValue,
+                    );
+                    notfirt = true;
+                    searching = true;
+                  });
                 },
-                icon: const Icon(Icons.search),
-                label: const Text("Ara"),
+                icon: searching
+                    ? const Icon(Icons.cloud_download)
+                    : const Icon(Icons.search),
+                label: searching ? const Text("Aranıyor") : const Text("Ara"),
               ),
-              if (!isget) const SizedBox() else const Text("data")
+              if (!searching && !isget && notfirt)
+                const Text("Kitap Bulunamadı"),
+              if (!isget) const SizedBox() else CategoryBookShow(books: books)
             ],
           ),
         ),

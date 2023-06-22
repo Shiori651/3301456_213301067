@@ -40,7 +40,7 @@ class _CategoryPageState extends ConsumerState<CategoryPage> {
         appBar: AppBar(
           title: Text(widget.category),
         ),
-        body: CategoryBookShow(books: books),
+        body: SingleChildScrollView(child: CategoryBookShow(books: books)),
       );
     }
     return const SplashScreen();
@@ -59,26 +59,33 @@ class CategoryBookShow extends StatelessWidget {
   Widget build(BuildContext context) {
     final count = books!.length ~/ 2;
     final cift = books!.length.isEven;
-    return ListView.builder(
-      itemCount: cift ? count : count + 1,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: (cift || (index != count))
-                ? [
-                    BookImgAndTitle(
-                      book: books![2 * index],
-                    ),
-                    BookImgAndTitle(
-                      book: books![2 * index + 1],
-                    ),
-                  ]
-                : [BookImgAndTitle(book: books![2 * index])],
-          ),
-        );
-      },
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        maxWidth: 450,
+        maxHeight: 295 * ((books!.length / 2) + 1),
+      ),
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: cift ? count : count + 1,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: (cift || (index != count))
+                  ? [
+                      BookImgAndTitle(
+                        book: books![2 * index],
+                      ),
+                      BookImgAndTitle(
+                        book: books![2 * index + 1],
+                      ),
+                    ]
+                  : [BookImgAndTitle(book: books![2 * index])],
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kitap_sarayi_app/Pages/SplashCategory/splash_category_view.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/search_provider.dart';
@@ -12,9 +13,7 @@ class SearchPage extends ConsumerStatefulWidget {
 }
 
 class _SearchPageState extends ConsumerState<SearchPage> {
-  TextEditingController name = TextEditingController();
-  TextEditingController author = TextEditingController();
-  TextEditingController publisher = TextEditingController();
+  TextEditingController textfildController = TextEditingController();
   TextEditingController isbn = TextEditingController();
   static const borderradius =
       OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)));
@@ -27,12 +26,21 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     selectedValue = category[0];
   }
 
+  String kitapad = "Kitap Adı";
+  String author = "Yazar";
+  String publisher = "Yayıncı";
+
   List<String> category = [];
   String selectedValue = "";
   bool searching = false;
   List<Books>? books;
   bool isget = false;
   bool notfirt = false;
+  bool isEnable = true;
+  bool isEnablebutton = true;
+
+  String selectedOption = "name";
+  String textfildTitle = "Kitap Adı";
   @override
   Widget build(BuildContext context) {
     final providerRef = ref.watch(searchProvider);
@@ -40,15 +48,16 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     ref.listen(
       searchProvider,
       (previous, next) {
-        print(next.books!.isEmpty);
         setState(() {
           if (next.havebooks()) {
             books = next.books;
             isget = true;
+            notfirt = false;
           } else {
             if (books != null) {
               books!.clear();
             }
+            notfirt = true;
           }
           searching = false;
         });
@@ -64,27 +73,47 @@ class _SearchPageState extends ConsumerState<SearchPage> {
           padding: const EdgeInsets.all(10),
           child: Column(
             children: [
-              SizedBox(
-                width: 375,
-                child: TextField(
-                  controller: name,
-                  decoration: const InputDecoration(
-                    border: borderradius,
-                    label: Text("Kitap Adı:"),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  textFieldWidget("Yazar:", author),
-                  textFieldWidget("Yayın Evi:", publisher),
+                  Radio(
+                    value: "name",
+                    groupValue: selectedOption,
+                    onChanged: isEnable
+                        ? (value) {
+                            setState(() {
+                              selectedOption = value.toString();
+                            });
+                          }
+                        : null,
+                  ),
+                  Text(kitapad),
+                  Radio(
+                    value: "author",
+                    groupValue: selectedOption,
+                    onChanged: isEnable
+                        ? (value) {
+                            setState(() {
+                              selectedOption = value.toString();
+                            });
+                          }
+                        : null,
+                  ),
+                  Text(author),
+                  Radio(
+                    value: "publisher",
+                    groupValue: selectedOption,
+                    onChanged: isEnable
+                        ? (value) {
+                            setState(() {
+                              selectedOption = value.toString();
+                            });
+                          }
+                        : null,
+                  ),
+                  Text(publisher),
                 ],
               ),
+              textFieldWidget(),
               const SizedBox(
                 height: 20,
               ),
@@ -92,18 +121,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    width: 180,
-                    child: TextField(
-                      controller: isbn,
-                      keyboardType: TextInputType.number,
-                      maxLength: 13,
-                      decoration: const InputDecoration(
-                        border: borderradius,
-                        label: Text("ISBN"),
-                      ),
-                    ),
-                  ),
+                  isbnTextField(),
                   dropButtonWidget(),
                 ],
               ),
@@ -111,26 +129,28 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                 height: 20,
               ),
               ElevatedButton.icon(
-                onPressed: () {
-                  setState(() {
-                    providerRef.searchget(
-                      name: name.text,
-                      author: author.text,
-                      publisher: publisher.text,
-                      isbn: isbn.text,
-                      booktype: selectedValue,
-                    );
-                    notfirt = true;
-                    searching = true;
-                  });
-                },
                 icon: searching
                     ? const Icon(Icons.cloud_download)
                     : const Icon(Icons.search),
                 label: searching ? const Text("Aranıyor") : const Text("Ara"),
+                onPressed: isEnablebutton
+                    ? () {
+                        setState(() {
+                          if (isbn.text == "") {
+                            providerRef.searchget(
+                              searchText: textfildController.text,
+                              booktype: selectedValue,
+                              searchType: selectedOption,
+                            );
+                          } else {
+                            providerRef.searchget(isbn: isbn.text);
+                          }
+                          searching = true;
+                        });
+                      }
+                    : null,
               ),
-              if (!searching && !isget && notfirt)
-                const Text("Kitap Bulunamadı"),
+              if (notfirt) const Text("Aradığınız Kitap Bulunamadı"),
               if (!isget) const SizedBox() else CategoryBookShow(books: books)
             ],
           ),
@@ -139,14 +159,48 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     );
   }
 
-  SizedBox textFieldWidget(String title, TextEditingController controller) {
+  SizedBox isbnTextField() {
     return SizedBox(
       width: 180,
       child: TextField(
-        controller: controller,
+        controller: isbn,
+        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+        keyboardType: TextInputType.number,
+        maxLength: 13,
+        onChanged: (value) {
+          setState(() {
+            isbncheck(value);
+          });
+        },
+        decoration: const InputDecoration(
+          border: borderradius,
+          label: Text("ISBN"),
+        ),
+      ),
+    );
+  }
+
+  void isbncheck(String value) {
+    if (value.isEmpty) {
+      isEnable = true;
+    } else {
+      isEnable = false;
+    }
+    if (value.length == 13 || value.isEmpty) {
+      isEnablebutton = true;
+    } else {
+      isEnablebutton = false;
+    }
+  }
+
+  SizedBox textFieldWidget() {
+    return SizedBox(
+      width: 375,
+      child: TextField(
+        controller: textfildController,
         decoration: InputDecoration(
           border: borderradius,
-          label: Text(title),
+          label: Text(textfildTitle),
         ),
       ),
     );
@@ -163,11 +217,13 @@ class _SearchPageState extends ConsumerState<SearchPage> {
             child: Text(value),
           );
         }).toList(),
-        onChanged: (newValue) {
-          setState(() {
-            selectedValue = newValue!;
-          });
-        },
+        onChanged: isEnable
+            ? (newValue) {
+                setState(() {
+                  selectedValue = newValue.toString();
+                });
+              }
+            : null,
       ),
     );
   }

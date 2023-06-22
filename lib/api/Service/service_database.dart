@@ -124,6 +124,7 @@ class FirebaseGet {
       final data = doc.data()! as Map<String, dynamic>;
       return Books.fromJson(data);
     }).toList();
+
     return dataList;
   }
 
@@ -143,46 +144,29 @@ class FirebaseGet {
   }
 
   Future<List<Books>> getSearch({
-    required String name,
-    required String author,
-    required String publisher,
-    required String ISBN,
+    required String searchText,
+    required String searchType,
+    required String isbn,
     required String book_type,
   }) async {
     Query query = FirebaseFirestore.instance.collection("books");
-    if (ISBN.isNotEmpty) {
-      query = query.where("ISBN", isEqualTo: ISBN);
+
+    if (isbn.isNotEmpty) {
+      print(isbn);
+      query = query.where("ISBN", isEqualTo: isbn);
     } else {
       if (book_type.isNotEmpty) {
         query = query.where("book_type", isEqualTo: book_type);
       }
-      if (name.isNotEmpty) {
-        name = formatSearchKeyword(name);
-        print(name);
+      if (searchText.isNotEmpty) {
+        searchText = formatSearchKeyword(searchText);
         query = query
-            .where('name', isGreaterThanOrEqualTo: name)
-            // ignore: prefer_interpolation_to_compose_strings
-            .where('name', isLessThan: name + 'z');
-      }
-
-      if (author.isNotEmpty) {
-        author = formatSearchKeyword(author);
-        query = query
-            .where('author', isGreaterThanOrEqualTo: author)
-            // ignore: prefer_interpolation_to_compose_strings
-            .where('author', isLessThan: author + 'z');
-      }
-
-      if (publisher.isNotEmpty) {
-        publisher = formatSearchKeyword(publisher);
-        query = query
-            .where('publisher', isGreaterThanOrEqualTo: publisher)
-            // ignore: prefer_interpolation_to_compose_strings
-            .where('publisher', isLessThan: publisher + 'z');
+            .where(searchType, isGreaterThanOrEqualTo: searchText)
+            .where(searchType, isLessThan: '${searchText}z');
       }
     }
 
-    final snapshot = await query.get();
+    final snapshot = await query.limit(30).get();
     final dataList = snapshot.docs.map((DocumentSnapshot doc) {
       final data = doc.data()! as Map<String, dynamic>;
       return Books.fromJson(data);

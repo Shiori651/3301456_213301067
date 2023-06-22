@@ -117,7 +117,7 @@ mixin _SplashHomeViewListenMixin on ConsumerState<SplashHomeView> {
         }
         ref.read(readlistProvider).userid = next.user!.id!;
         ref.read(readlistProvider).readlistListID = next.library!.readList!;
-        if (next.libraryBooks != null) {
+        if (next.readListBooks != null) {
           ref.read(readlistProvider).readlistBooks = next.readListBooks;
         }
       }

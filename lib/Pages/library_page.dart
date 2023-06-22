@@ -12,12 +12,8 @@ class LibraryPage extends ConsumerStatefulWidget {
 }
 
 class _LibraryPageState extends ConsumerState<LibraryPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   List<Books>? books;
+
   @override
   Widget build(BuildContext context) {
     books = ref.watch(libraryProvider).libraryBooks;
@@ -26,7 +22,7 @@ class _LibraryPageState extends ConsumerState<LibraryPage> {
         title: const Text("Kütüphanem"),
         leading: const SizedBox(),
       ),
-      body: books == null
+      body: books!.isEmpty
           ? const Center(child: Text("Kütüphane Boş"))
           : SingleChildScrollView(
               child: Padding(

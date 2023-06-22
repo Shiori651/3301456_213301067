@@ -5,11 +5,17 @@ import 'package:kitap_sarayi_app/Pages/book_page.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/readlist_provider.dart';
 import 'package:kitap_sarayi_app/api/Models/books.dart';
 
-class ReadListPage extends ConsumerWidget {
+class ReadListPage extends ConsumerStatefulWidget {
   const ReadListPage({super.key});
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final books = ref.watch(readlistProvider).readlistBooks;
+  ConsumerState<ConsumerStatefulWidget> createState() => _ReadListPageState();
+}
+
+class _ReadListPageState extends ConsumerState<ReadListPage> {
+  List<Books>? books;
+  @override
+  Widget build(BuildContext context) {
+    books = ref.watch(readlistProvider).readlistBooks;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Okuma Listem"),
@@ -17,33 +23,35 @@ class ReadListPage extends ConsumerWidget {
       ),
       body: books == null
           ? const Center(child: Text("Okuma Listesi Boş"))
-          : SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    Column(
-                      children: List.generate(books.length, (index) {
-                        final book = books[index];
-                        return GestureDetector(
-                          onTap: () => Navigator.push(
-                            context,
-                            // ignore: inference_failure_on_instance_creation
-                            MaterialPageRoute(
-                              builder: (context) => BookPage(book: book),
-                            ),
-                          ),
-                          child: ReadListCard(book: book),
-                        );
-                      }),
+          : books!.isEmpty
+              ? const Center(child: Text("Okuma Listesi Boş"))
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        Column(
+                          children: List.generate(books!.length, (index) {
+                            final book = books![index];
+                            return GestureDetector(
+                              onTap: () => Navigator.push(
+                                context,
+                                // ignore: inference_failure_on_instance_creation
+                                MaterialPageRoute(
+                                  builder: (context) => BookPage(book: book),
+                                ),
+                              ),
+                              child: ReadListCard(book: book),
+                            );
+                          }),
+                        ),
+                        const SizedBox(
+                          height: 80,
+                        )
+                      ],
                     ),
-                    const SizedBox(
-                      height: 80,
-                    )
-                  ],
+                  ),
                 ),
-              ),
-            ),
     );
   }
 }

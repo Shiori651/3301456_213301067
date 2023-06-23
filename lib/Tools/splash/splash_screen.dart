@@ -11,15 +11,14 @@ class SplashScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: TextLiquidFill(
-          text: 'Kitap Köşkü',
+          text: 'KİTAP SARAYI',
           waveColor: Theme.of(context).colorScheme.primary,
           boxBackgroundColor: Theme.of(context).colorScheme.background,
           textAlign: TextAlign.center,
           textStyle: const TextStyle(
             fontSize: 40,
             fontFamily: "Dosis",
-            fontWeight: FontWeight.w600,
-            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
           ),
           boxHeight: 300,
         ),

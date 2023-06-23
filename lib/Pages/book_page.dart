@@ -33,8 +33,7 @@ class _BookPageState extends ConsumerState<BookPage> {
       "Sayfa Sayısı": book.pages_count,
       "ISBN": book.ISBN
     }..removeWhere((key, value) => value == "");
-
-    print(bookFeature);
+    print(bookFeature.keys.elementAt(2));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -82,10 +81,10 @@ class _BookPageState extends ConsumerState<BookPage> {
                 onPressed: () {
                   if (isLibrary) {
                     libaryReferanceprovider.libraryRomove(book.id!);
-                    libaryReferanceprovider.libraryBooks!.remove(book);
+                    libaryReferanceprovider.libraryBooks.remove(book);
                   } else {
                     libaryReferanceprovider.libraryAdd(book.id!);
-                    libaryReferanceprovider.libraryBooks!.add(book);
+                    libaryReferanceprovider.libraryBooks.add(book);
                   }
                   setState(() {});
                 },
@@ -101,41 +100,18 @@ class _BookPageState extends ConsumerState<BookPage> {
                 onPressed: () {
                   if (isReadList) {
                     readReferanceprovider.readListRomove(book.id!);
-                    readReferanceprovider.readlistBooks!.remove(book);
+                    readReferanceprovider.readlistBooks.remove(book);
                   } else {
                     readReferanceprovider.readListAdd(book.id!);
-                    readReferanceprovider.readlistBooks!.add(book);
+                    readReferanceprovider.readlistBooks.add(book);
                   }
                   setState(() {});
                 },
               ),
             ),
-            Text(
-              "Kitap Türü: ${book.book_type}",
-            ),
-            if (book.publisher == "")
-              const SizedBox()
-            else
-              Text(
-                "Yayın Evi: ${book.publisher}",
-              ),
-            if (book.publication_year == "")
-              const SizedBox()
-            else
-              Text(
-                "Yayın Yılı: ${book.publication_year}",
-              ),
-            if (book.pages_count == "")
-              const SizedBox()
-            else
-              Text(
-                "Sayfa Sayısı: ${book.pages_count}",
-              ),
-            Text(
-              "ISBN: ${book.ISBN}",
-            ),
-            const SizedBox(
-              height: 40,
+            Padding(
+              padding: const EdgeInsets.all(13),
+              child: showFieldTitle(bookFeature),
             ),
             Text(
               "Kitap Açıklaması",
@@ -144,7 +120,7 @@ class _BookPageState extends ConsumerState<BookPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(13),
               child: SizedBox(
                 width: 500,
                 child: Text(
@@ -167,7 +143,32 @@ class _BookPageState extends ConsumerState<BookPage> {
     );
   }
 
-  Row showField(String title, String value) {
-    return const Row();
+  Row showFieldTitle(Map<String, String?> value) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 100,
+          height: 110,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              value.length,
+              (index) => Text(value.keys.elementAt(index)),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 200,
+          height: 110,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(
+              value.length,
+              (index) => Text(":${value.values.elementAt(index)}"),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

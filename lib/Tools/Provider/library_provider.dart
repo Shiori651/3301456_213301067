@@ -6,10 +6,11 @@ import 'package:kitap_sarayi_app/api/Service/service_database.dart';
 class LibraryCange extends ChangeNotifier {
   String userid = "";
   List<String> libraryListID = [];
-  List<Books>? libraryBooks;
+  List<Books> libraryBooks = [];
   void libraryAdd(String book) {
     libraryListID.add(book);
     UpdateDatabase().addLibrary(book, userid);
+    print(libraryBooks);
     notifyListeners();
   }
 
@@ -31,9 +32,7 @@ class LibraryCange extends ChangeNotifier {
   void reset() {
     userid = "";
     libraryListID = [];
-    if (libraryBooks != null) {
-      libraryBooks!.clear();
-    }
+    libraryBooks.clear();
   }
 }
 

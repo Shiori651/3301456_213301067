@@ -82,6 +82,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                         ? (value) {
                             setState(() {
                               selectedOption = value.toString();
+                              textfildTitle = kitapad;
                             });
                           }
                         : null,
@@ -94,6 +95,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                         ? (value) {
                             setState(() {
                               selectedOption = value.toString();
+                              textfildTitle = author;
                             });
                           }
                         : null,
@@ -106,6 +108,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                         ? (value) {
                             setState(() {
                               selectedOption = value.toString();
+                              textfildTitle = publisher;
                             });
                           }
                         : null,
@@ -197,6 +200,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     return SizedBox(
       width: 375,
       child: TextField(
+        enabled: isEnable,
         controller: textfildController,
         decoration: InputDecoration(
           border: borderradius,

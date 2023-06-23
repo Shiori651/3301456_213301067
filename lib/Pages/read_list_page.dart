@@ -21,37 +21,35 @@ class _ReadListPageState extends ConsumerState<ReadListPage> {
         title: const Text("Okuma Listem"),
         leading: const SizedBox(),
       ),
-      body: books == null
+      body: books!.isEmpty
           ? const Center(child: Text("Okuma Listesi Boş"))
-          : books!.isEmpty
-              ? const Center(child: Text("Okuma Listesi Boş"))
-              : SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        Column(
-                          children: List.generate(books!.length, (index) {
-                            final book = books![index];
-                            return GestureDetector(
-                              onTap: () => Navigator.push(
-                                context,
-                                // ignore: inference_failure_on_instance_creation
-                                MaterialPageRoute(
-                                  builder: (context) => BookPage(book: book),
-                                ),
-                              ),
-                              child: ReadListCard(book: book),
-                            );
-                          }),
-                        ),
-                        const SizedBox(
-                          height: 80,
-                        )
-                      ],
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Column(
+                      children: List.generate(books!.length, (index) {
+                        final book = books![index];
+                        return GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            // ignore: inference_failure_on_instance_creation
+                            MaterialPageRoute(
+                              builder: (context) => BookPage(book: book),
+                            ),
+                          ),
+                          child: ReadListCard(book: book),
+                        );
+                      }),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 80,
+                    )
+                  ],
                 ),
+              ),
+            ),
     );
   }
 }

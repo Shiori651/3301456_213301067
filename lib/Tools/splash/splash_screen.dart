@@ -16,9 +16,9 @@ class SplashScreen extends StatelessWidget {
           boxBackgroundColor: Theme.of(context).colorScheme.background,
           textAlign: TextAlign.center,
           textStyle: const TextStyle(
-            fontSize: 40,
-            fontFamily: "Dosis",
-            fontWeight: FontWeight.bold,
+            fontSize: 45,
+            fontFamily: "Belanosima",
+            wordSpacing: 8,
           ),
           boxHeight: 300,
         ),

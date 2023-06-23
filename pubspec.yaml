@@ -48,7 +48,12 @@ dependencies:
   path: ^1.8.3
   #state yönetimi kolaylaştırma
   kartal: ^2.8.0
+  flutter_launcher_icons: ^0.13.1
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/appicon/app_icon.png"
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -65,6 +70,7 @@ flutter:
   assets:
       - assets/Logo/
       - assets/Icons/
+      - assets/appicon/
 
 
   fonts:
@@ -80,3 +86,8 @@ flutter:
     - family: CrimsonText
       fonts:
         - asset: assets/fonts/CrimsonText-SemiBoldItalic.ttf
+    
+
+    - family: Belanosima
+      fonts:
+        - asset: assets/fonts/Belanosima-SemiBold.ttf

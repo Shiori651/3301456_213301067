@@ -113,12 +113,13 @@ mixin _SplashHomeViewListenMixin on ConsumerState<SplashHomeView> {
         ref.read(libraryProvider).userid = next.user!.id!;
         ref.read(libraryProvider).libraryListID = next.library!.library!;
         if (next.libraryBooks != null) {
-          ref.read(libraryProvider).libraryBooks = next.libraryBooks;
+          ref.read(libraryProvider).libraryBooks = next.libraryBooks!;
         }
+
         ref.read(readlistProvider).userid = next.user!.id!;
         ref.read(readlistProvider).readlistListID = next.library!.readList!;
         if (next.readListBooks != null) {
-          ref.read(readlistProvider).readlistBooks = next.readListBooks;
+          ref.read(readlistProvider).readlistBooks = next.readListBooks!;
         }
       }
     });

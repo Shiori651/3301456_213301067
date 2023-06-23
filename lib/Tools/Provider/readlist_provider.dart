@@ -8,7 +8,7 @@ import 'package:kitap_sarayi_app/api/Service/service_database.dart';
 class ReadlistProvider extends ChangeNotifier {
   String userid = "";
   List<String> readlistListID = [];
-  List<Books>? readlistBooks;
+  List<Books> readlistBooks = [];
 
   bool readListCheck(String book) {
     return readlistListID.contains(book);
@@ -34,9 +34,7 @@ class ReadlistProvider extends ChangeNotifier {
   void reset() {
     userid = "";
     readlistListID = [];
-    if (readlistBooks != null) {
-      readlistBooks!.clear();
-    }
+    readlistBooks.clear();
   }
 }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_sarayi_app/Tools/colorstheme.dart';
 import 'package:kitap_sarayi_app/Tools/language.dart';
 import 'package:kitap_sarayi_app/api/Models/users.dart';
 
@@ -38,34 +37,34 @@ class _SettingPageState extends State<SettingPage> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            Row(
+            const Row(
               children: [
                 Icon(
                   Icons.person,
-                  color: Colorstheme().libraryAddColor,
                   size: 30,
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Text(
                   SettingTitle.personTitle,
-                  style: TextStyle(fontSize: 17, color: Colorstheme().bookBack),
+                  style: TextStyle(
+                    fontSize: 17,
+                  ),
                 )
               ],
             ),
             personData(title: SettingTitle.epostTitle, subTitle: eposta),
             personData(title: SettingTitle.nameTitle, subTitle: name),
             personData(title: SettingTitle.birthTitle, subTitle: birthDate),
-            Row(
+            const Row(
               children: [
                 Icon(
                   Icons.settings,
-                  color: Colorstheme().libraryAddColor,
                   size: 30,
                 ),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 Text(
                   SettingTitle.appSettingTitle,
-                  style: TextStyle(fontSize: 17, color: Colorstheme().bookBack),
+                  style: TextStyle(fontSize: 17),
                 )
               ],
             ),

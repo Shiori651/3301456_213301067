@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:kitap_sarayi_app/Tools/basil_theme.dart';
+import 'package:kitap_sarayi_app/Tools/splash/splash_screen.dart';
 
 import 'package:kitap_sarayi_app/api/Models/books.dart';
 
@@ -78,11 +79,12 @@ class _PopularBookChangeState extends State<PopularBookChange> {
   @override
   Widget build(BuildContext context) {
     const padding = EdgeInsets.symmetric(vertical: 16);
+
+    if (!(hasbooks && haspopulars)) {
+      return const SplashScreen();
+    }
     return Scaffold(
       appBar: AppBar(
-        actions: (hasbooks && haspopulars)
-            ? [const SizedBox()]
-            : [const CircularProgressIndicator()],
         title: const Text("Değiştir"),
       ),
       body: !(hasbooks && haspopulars)
@@ -123,15 +125,12 @@ class _PopularBookChangeState extends State<PopularBookChange> {
       children: [
         Text(
           "${index + 1}. Popüler Kitap",
-          style: Theme.of(context).textTheme.headlineMedium,
         ),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: TypeAheadField(
             textFieldConfiguration: TextFieldConfiguration(
-              style: Theme.of(context).textTheme.headlineSmall,
               decoration: InputDecoration(
-                hintStyle: Theme.of(context).textTheme.headlineSmall,
                 hintText: names[index],
               ),
             ),
@@ -140,7 +139,6 @@ class _PopularBookChangeState extends State<PopularBookChange> {
               return ListTile(
                 title: Text(
                   suggestion,
-                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
               );
             },

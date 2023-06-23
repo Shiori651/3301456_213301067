@@ -23,46 +23,20 @@ class BasilTheme extends ThemeExtension<BasilTheme> {
 
   ThemeData _base(ColorScheme colorScheme) {
     return ThemeData(
+      fontFamily: "OpenSans",
       useMaterial3: true,
       extensions: [this],
       colorScheme: colorScheme,
-      appBarTheme: AppBarTheme(
+      appBarTheme: const AppBarTheme(
         centerTitle: true,
         titleTextStyle: TextStyle(
           fontSize: 20,
-          fontFamily: "Roboto",
           fontWeight: FontWeight.w500,
-          color: colorScheme.onBackground,
         ),
       ),
-      textTheme: const TextTheme(
-        displayLarge: TextStyle(
-          fontSize: 20,
-          fontFamily: "OpenSans",
-          fontWeight: FontWeight.w500,
-        ),
-        headlineSmall: TextStyle(
-          fontSize: 15,
-          fontFamily: "OpenSans",
-          fontWeight: FontWeight.w500,
-        ),
-        headlineMedium: TextStyle(
-          fontSize: 16,
-          fontFamily: "OpenSans",
-          fontWeight: FontWeight.bold,
-        ),
-        bodySmall: TextStyle(
-          fontFamily: "OpenSans",
-          fontWeight: FontWeight.w300,
-        ),
-        bodyMedium: TextStyle(
-          fontFamily: "OpenSans",
-          fontWeight: FontWeight.w300,
-        ),
-        bodyLarge: TextStyle(
-          fontFamily: "OpenSans",
-          fontWeight: FontWeight.w300,
-        ),
+      // ignore: prefer_const_constructors
+      textTheme: TextTheme(
+        bodyMedium: const TextStyle(fontSize: 15),
       ),
     );
   }

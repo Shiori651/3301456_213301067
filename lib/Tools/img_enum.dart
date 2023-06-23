@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kartal/kartal.dart';
 import 'package:kitap_sarayi_app/Pages/SplashCategory/splash_category_view.dart';
 
 import 'package:kitap_sarayi_app/api/Service/service_database.dart';
@@ -11,14 +10,13 @@ class ContainerCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               "Kategoriler",
-              style: context.textTheme.headlineSmall,
             ),
-            const SizedBox()
+            SizedBox()
           ],
         ),
         const SizedBox(

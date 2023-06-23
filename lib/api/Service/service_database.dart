@@ -135,6 +135,7 @@ class FirebaseGet {
           "book_type",
           isEqualTo: category,
         )
+        .limit(100)
         .get();
     final dataList = snapshot.docs.map((DocumentSnapshot doc) {
       final data = doc.data()! as Map<String, dynamic>;

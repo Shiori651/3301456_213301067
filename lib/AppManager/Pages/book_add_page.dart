@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:kitap_sarayi_app/Tools/colorstheme.dart';
 import 'package:kitap_sarayi_app/api/Service/servis_auth.dart';
 
 class BookAddPage extends StatefulWidget {
@@ -141,11 +140,6 @@ class _BookAddPageState extends State<BookAddPage> {
     return ElevatedButton.icon(
       icon: const Icon(Icons.add),
       onPressed: addBooksToFirebase,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-          Colorstheme().libraryAddColor,
-        ),
-      ),
       label: const Text("Veri Tabanına Ekle"),
     );
   }
@@ -153,11 +147,6 @@ class _BookAddPageState extends State<BookAddPage> {
   ElevatedButton excelCikarButton() {
     return ElevatedButton(
       onPressed: filepicker,
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-          Colorstheme().libraryAddColor,
-        ),
-      ),
       child: const Text("Excel'den Çıkar"),
     );
   }

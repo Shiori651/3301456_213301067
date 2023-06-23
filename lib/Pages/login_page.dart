@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_sarayi_app/AppManager/Pages/manager_home_page.dart';
 import 'package:kitap_sarayi_app/Pages/register_page.dart';
-import 'package:kitap_sarayi_app/Tools/colorstheme.dart';
 import 'package:kitap_sarayi_app/Tools/language.dart';
 import 'package:kitap_sarayi_app/Widgets/text_fild.dart';
 import 'package:kitap_sarayi_app/api/Service/servis_auth.dart';
@@ -48,9 +47,6 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 label: const Text("Giriş Yap"),
                 icon: const Icon(Icons.login),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colorstheme().bookBack,
-                ),
               ),
             ),
             TextButton(

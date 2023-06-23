@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kitap_sarayi_app/AppManager/Pages/book_add_page.dart';
 import 'package:kitap_sarayi_app/AppManager/Pages/popular_book_change.dart';
+import 'package:kitap_sarayi_app/AppManager/Pages/version_conteoller.dart';
 
 enum IconConstants { importexcel, popularbooks, versionChecking }
 
@@ -29,7 +30,7 @@ extension IconContantsGet on IconConstants {
       case IconConstants.popularbooks:
         return const PopularBookChange();
       case IconConstants.versionChecking:
-        return const SizedBox();
+        return const VersionControlPage();
     }
   }
 

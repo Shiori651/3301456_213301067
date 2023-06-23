@@ -26,7 +26,15 @@ class _BookPageState extends ConsumerState<BookPage> {
     final readReferanceprovider = ref.watch(readlistProvider);
     final isLibrary = libaryReferanceprovider.libraryCheck(book.id!);
     final isReadList = readReferanceprovider.readListCheck(book.id!);
+    final bookFeature = <String, String?>{
+      "Kitap Türü": book.book_type,
+      "Yayın Evi": book.publisher,
+      "Yayın Yılı": book.publication_year,
+      "Sayfa Sayısı": book.pages_count,
+      "ISBN": book.ISBN
+    }..removeWhere((key, value) => value == "");
 
+    print(bookFeature);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -104,32 +112,27 @@ class _BookPageState extends ConsumerState<BookPage> {
             ),
             Text(
               "Kitap Türü: ${book.book_type}",
-              style: context.textTheme.headlineMedium,
             ),
             if (book.publisher == "")
               const SizedBox()
             else
               Text(
                 "Yayın Evi: ${book.publisher}",
-                style: context.textTheme.headlineMedium,
               ),
             if (book.publication_year == "")
               const SizedBox()
             else
               Text(
                 "Yayın Yılı: ${book.publication_year}",
-                style: context.textTheme.headlineMedium,
               ),
             if (book.pages_count == "")
               const SizedBox()
             else
               Text(
                 "Sayfa Sayısı: ${book.pages_count}",
-                style: context.textTheme.headlineMedium,
               ),
             Text(
               "ISBN: ${book.ISBN}",
-              style: context.textTheme.headlineMedium,
             ),
             const SizedBox(
               height: 40,
@@ -146,8 +149,12 @@ class _BookPageState extends ConsumerState<BookPage> {
                 width: 500,
                 child: Text(
                   book.explanation!,
-                  style:
-                      context.textTheme.headlineSmall!.copyWith(fontSize: 16),
+                  style: context.textTheme.headlineSmall!.copyWith(
+                    fontSize: 17,
+                    fontFamily: "Calibri",
+                    fontStyle: FontStyle.italic,
+                    wordSpacing: 5,
+                  ),
                 ),
               ),
             ),
@@ -158,5 +165,9 @@ class _BookPageState extends ConsumerState<BookPage> {
         ),
       ),
     );
+  }
+
+  Row showField(String title, String value) {
+    return const Row();
   }
 }

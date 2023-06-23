@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:kartal/kartal.dart';
 import 'package:kitap_sarayi_app/Pages/SplashCategory/splash_category_view.dart';
 import 'package:kitap_sarayi_app/Pages/book_page.dart';
 import 'package:kitap_sarayi_app/Tools/Provider/library_provider.dart';
@@ -23,13 +22,8 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Ana Sayfa",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: context.colorScheme.onBackground,
-          ),
         ),
         leading: IconButton(
           icon: const Icon(Icons.exit_to_app),
@@ -65,14 +59,13 @@ class HomePage extends ConsumerWidget {
   Column popularShow(List<Books> books, BuildContext context) {
     return Column(
       children: [
-        Row(
+        const Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               "Popüler Kitaplar",
-              style: context.textTheme.headlineSmall,
             ),
-            const SizedBox()
+            SizedBox()
           ],
         ),
         SizedBox(
@@ -175,7 +168,6 @@ class BookShowWidget extends StatelessWidget {
                         children: [
                           Text(
                             categoryes[index],
-                            style: context.textTheme.headlineSmall,
                           ),
                           const Icon(Icons.navigate_next)
                         ],

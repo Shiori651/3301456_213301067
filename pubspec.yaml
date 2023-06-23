@@ -66,15 +66,17 @@ flutter:
       - assets/Logo/
       - assets/Icons/
 
-fonts:
+
+  fonts:
     - family: OpenSans
       fonts:
-        - asset: assets/fonts/OpenSans-Bold.ttf
-        - asset: assets/fonts/OpenSans-Regular.ttf
-          weight: 700
+        - asset: assets/fonts/OpenSans-VariableFont_wdth,wght.ttf
+
     - family: Dosis
       fonts:
-        - asset: assets/fonts/Dosis-Bold.ttf
-        - asset: fonts/Dosis-SemiBold.ttf
-        - asset: assets/fonts/Dosis-Regular.ttf
-          weight: 700
+        - asset: assets/fonts/Dosis-VariableFont_wght.ttf
+
+
+    - family: CrimsonText
+      fonts:
+        - asset: assets/fonts/CrimsonText-SemiBoldItalic.ttf

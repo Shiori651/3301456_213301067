@@ -1,11 +1,11 @@
 {
-    "name": "kitap_sarayi_app",
+    "name": "Kitap Sarayı",
     "short_name": "kitap_sarayi_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Geleceğe Yatırım",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

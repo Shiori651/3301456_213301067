@@ -21,12 +21,11 @@ class SplashHomeProvider extends StateNotifier<SplashHomeState> {
       );
     }
     if (libaryid.readList!.isNotEmpty) {
-      print(libaryid.readList);
       state = state.copyWith(
         readListBooks: await FirebaseGet().getDocIdBooks(libaryid.readList!),
       );
     }
-    print(state.readListBooks);
+
     state = state.copyWith(
       isGet: true,
       library: libaryid,

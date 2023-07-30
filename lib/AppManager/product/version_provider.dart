@@ -15,7 +15,6 @@ class VersionProvider extends ChangeNotifier {
         .get();
 
     android = Version.fromJson(snapshotand.data()! as Map<String, dynamic>);
-    print(android!.number);
     final DocumentSnapshot snapshotiso =
         await FirebaseFirestore.instance.collection('version').doc("ios").get();
 

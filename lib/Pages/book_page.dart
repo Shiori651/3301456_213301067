@@ -33,7 +33,6 @@ class _BookPageState extends ConsumerState<BookPage> {
       "Sayfa Sayısı": book.pages_count,
       "ISBN": book.ISBN
     }..removeWhere((key, value) => value == "");
-    print(bookFeature.keys.elementAt(2));
     return Scaffold(
       appBar: AppBar(
         title: Text(

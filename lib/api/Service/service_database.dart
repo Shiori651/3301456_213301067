@@ -153,7 +153,6 @@ class FirebaseGet {
     Query query = FirebaseFirestore.instance.collection("books");
 
     if (isbn.isNotEmpty) {
-      print(isbn);
       query = query.where("ISBN", isEqualTo: isbn);
     } else {
       if (book_type.isNotEmpty) {
@@ -172,7 +171,6 @@ class FirebaseGet {
       final data = doc.data()! as Map<String, dynamic>;
       return Books.fromJson(data);
     }).toList();
-    print(dataList.length);
     return dataList;
   }
 

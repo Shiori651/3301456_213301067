@@ -1,3 +1,3 @@
 # Kitap Sarayı
 
-![image/DarkMode.png]
+![](image/DarkMode.png)

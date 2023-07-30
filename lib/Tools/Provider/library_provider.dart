@@ -10,7 +10,7 @@ class LibraryCange extends ChangeNotifier {
   void libraryAdd(String book) {
     libraryListID.add(book);
     UpdateDatabase().addLibrary(book, userid);
-    print(libraryBooks);
+
     notifyListeners();
   }
 

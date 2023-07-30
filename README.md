@@ -1,7 +1,7 @@
 # Kitap Sarayı
 (Bu uygulama eğitim içindir)
 
-Uygulama kitap severler için geliştirilmiş olup kullanıcıların kitaplarını uygulama içinde olan 6800 kitap içinden bulup kütüphanelerine eklemelerini sağlamaktadır. Ayrıca okumak istediği kitapları da okuma listesine ekleyip kullanıcının unutmamasını sağlamaktadır.
+Uygulama kitap severler için geliştirilmiş olup, kullanıcıların kitaplarını uygulama içinde olan 6800 kitap içinden bulup kütüphanelerine eklemelerini sağlamaktadır. Ayrıca okumak istediği kitapları da okuma listesine ekleyip kullanıcının unutmamasını sağlamaktadır.
 
 Uygulama Futter üzerinden geliştiriği için web'de de çıkmaktadır.
 

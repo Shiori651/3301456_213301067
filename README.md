@@ -39,7 +39,7 @@ Eğer desktop üzerinden açıyorsanız f12'ye basıp çıkan pencerenin sol üs
 # Manager
 
 Yönetim kısmı excel ile çoklu kitap ekleme, Popüler Kitapları değiştirme ve güvenlik amacıyla yapılan version kontrol sayfalarından oluşmaktadır.
-Version kontrol sayfası belli en düşük version belirlenir. Kullanıcılar o version altındaki uygulamayı kullandıkları zaman hangi işletim sistemiyse o sistemin Store kısmından güncellemeye zorlamaktadır.
+Version kontrol sayfası en düşük version belirlenir. Kullanıcılar o version altındaki uygulamayı kullandıkları zaman hangi işletim sistemiyse o sisteminin Store kısmına yönlendirerek güncellemeye zorlamaktadır.
 
 <img src="image/VersionController.png" width="250">
 

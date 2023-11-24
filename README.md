@@ -5,7 +5,7 @@ Uygulama kitap severler için geliştirilmiş olup, kullanıcıların kitapları
 
 Uygulama Futter üzerinden geliştiriği için web'de de çıkmaktadır.
 
-Eğer desktop üzerinden açıyorsanız f12'ye basıp çıkan pencerenin sol üstündeki mobil görünümünü açınız.
+**Not**: Eğer desktop üzerinden açıyorsanız f12'ye basıp çıkan pencerenin sol üstündeki mobil görünümünü açınız.
 
 [Web sürümünü denemek için tıklayınız.](https://shiori651.github.io/Kitap-SarayiWeb/#/)
 

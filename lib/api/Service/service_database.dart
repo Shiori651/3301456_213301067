@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
 import 'package:kitap_sarayi_app/Tools/database_key.dart';
 import 'package:kitap_sarayi_app/Tools/version/platform_name.dart';
 import 'package:kitap_sarayi_app/api/Models/books.dart';
@@ -190,5 +193,44 @@ class FirebaseGet {
     }
 
     return words.join(' ');
+  }
+
+  Future<List<String>> fetchRecommendations(String userId) async {
+    final url = Uri.parse('https://websayfasitasarimi.tr/kitap-api/recommend?id=$userId');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final recommendations = List<String>.from(
+            data['recommendations'],
+        );
+        return recommendations;
+      } else {
+        throw Exception('API isteği başarısız oldu: ${response.statusCode}');
+      }
+    } catch (e) {
+      return [];
+    }
+  }
+  Future<List<String>> fetchRecommendationsForUser(List<String> bookIds) async {
+    final url = Uri.parse('https://websayfasitasarimi.tr/kitap-api/recommends?ids=${bookIds.join(",")}');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final recommendations = List<String>.from(
+          data['recommendations'],
+        );
+        return recommendations;
+      } else {
+        throw Exception('API isteği başarısız oldu: ${response.statusCode}');
+      }
+    } catch (e) {
+      return [];
+    }
   }
 }

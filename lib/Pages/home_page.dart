@@ -8,52 +8,100 @@ import 'package:kitap_sarayi_app/Tools/img_enum.dart';
 import 'package:kitap_sarayi_app/api/Models/books.dart';
 import 'package:kitap_sarayi_app/api/Service/service_database.dart';
 
-class HomePage extends ConsumerWidget {
-  const HomePage({required this.books, required this.popularbooks, super.key});
+class HomePage extends ConsumerStatefulWidget {
+  const HomePage({
+    required this.books,
+    required this.popularbooks,
+    super.key,
+  });
   final List<Books> books;
   final List<Books> popularbooks;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage>{
+
+  late List<Books> books;
+  late List<Books> popularbooks;
+  @override
+  void initState() {
+    super.initState();
+    books = widget.books;
+    popularbooks = widget.popularbooks;
+  }
+
+
+  Future<List<Books>> _fetchData() async {
+
+    final libraryProviderRef = ref.watch(libraryProvider);
+    final libraryBook = libraryProviderRef.libraryBooks;
+    final ids = libraryBook
+        .map((Books value) => value.id)
+        .whereType<String>()
+        .toList();
+    var recommendsListBook = <Books>[];
+    if(ids.isNotEmpty){
+      final recommendsList =
+      await FirebaseGet().fetchRecommendationsForUser(ids);
+
+      if(recommendsList.isNotEmpty){
+        recommendsListBook = await FirebaseGet().getDocIdBooks(recommendsList);
+      }
+
+    }
+    return recommendsListBook;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     void reset() {
       ref.read(readlistProvider).reset();
       ref.read(libraryProvider).reset();
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Ana Sayfa",
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.exit_to_app),
-          onPressed: () {
-            reset();
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              popularShow(popularbooks, context),
-              ContainerCategory(),
-              const SizedBox(
-                height: 10,
+    return
+      FutureBuilder(
+        future: _fetchData(),
+        builder: (context,snapshot){
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text(
+                "Ana Sayfa",
               ),
-              BookShowWidget(
-                books: books,
+              leading: IconButton(
+                icon: const Icon(Icons.exit_to_app),
+                onPressed: () {
+                  reset();
+                  Navigator.pop(context);
+                },
               ),
-              const SizedBox(
-                height: 80,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    popularShow(popularbooks, context),
+                    recommendsBooksList(snapshot,context),
+                    ContainerCategory(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    BookShowWidget(
+                      books: books,
+                    ),
+                    const SizedBox(
+                      height: 80,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
   }
 
   Column popularShow(List<Books> books, BuildContext context) {
@@ -85,7 +133,80 @@ class HomePage extends ConsumerWidget {
       ],
     );
   }
+  Column recommendsBooksList(AsyncSnapshot<List<Books>> snapshot, BuildContext context) {
+    if(snapshot.connectionState==ConnectionState.waiting){
+      return const Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Sizin İçin Seçilen",
+              ),
+              SizedBox(),
+            ],
+          ),
+          SizedBox(
+            height: 300,
+            child: Center(child: CircularProgressIndicator()),
+          ),
+        ],
+      );
+    }
+    else if(snapshot.hasData){
+      if(snapshot.data!.isNotEmpty){
+        final recommendsBooks = snapshot.data;
+        return Column(
+          children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Sizin İçin Seçilen",
+                ),
+                SizedBox(),
+              ],
+            ),
+            SizedBox(
+              height: 300,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: recommendsBooks!.length,
+                itemBuilder: (context, index) {
+                  final recommendsBook = recommendsBooks[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 10, right: 10),
+                    child: BookImgAndTitle(book: recommendsBook),
+                  );
+                },
+              ),
+            ),
+          ],
+        );
+      }
+      else{
+        return const Column();
+      }
+    }
+    else{
+      return const Column();
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class BookImgAndTitle extends StatelessWidget {
   const BookImgAndTitle({

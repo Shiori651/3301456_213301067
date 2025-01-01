@@ -22,11 +22,11 @@ dependencies:
   animated_text_kit: ^4.2.2
 
   # firebase paketleri
-  firebase_core: ^2.13.0
-  firebase_storage: ^11.1.0
-  firebase_database: ^10.1.0
-  firebase_auth: ^4.6.1
-  cloud_firestore: ^4.7.1 
+  firebase_core: ^3.9.0
+  firebase_storage: ^12.3.7
+  firebase_database: ^11.2.0
+  firebase_auth: ^5.3.4
+  cloud_firestore: ^5.6.0
 
   #provider
   equatable: ^2.0.5
@@ -46,6 +46,7 @@ dependencies:
   excel: ^2.1.0
   win32: ^3.0.0
   path: ^1.8.3
+  http: ^0.13.5
   #state yönetimi kolaylaştırma
   kartal: ^2.8.0
   flutter_launcher_icons: ^0.13.1
